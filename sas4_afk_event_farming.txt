@@ -1,0 +1,125 @@
+// docstring.
+// please, open the game and choose the character before execute this script.
+// you can find a wallpaper in the repository that have a line marked that
+// cannot be crossed while this script is running.
+
+
+// find sas4 handle and set working window.
+set #sas findwindow (SAS)
+wait 1000
+set workwindow #sas
+wait 1000
+
+// set window position and size.
+set windowpos -7 0 1 1 #sas
+wait 1000
+
+// enter the main loop.
+while 1 = 1
+
+    // take event's rewards.
+    if 37, 238 2 abs
+        left 394, 370 #sas
+        wait 3000
+    end_if
+
+    // the main menu.
+    if 70, 185 8345364 abs
+        left 312, 307 #sas
+        wait 3000
+        left 437, 313 #sas
+        wait 3000
+        left 116, 365 #sas
+        wait 3000
+    end_if
+
+    // the end of the match.
+    if 13, 42 0 abs and 37, 452 0 abs
+        left 305, 390 #sas
+        wait 3000
+
+        // mastery upgrade.
+        if 59, 270 7829439 abs
+            send217 {Esc}
+            wait 3000
+            send217 {Esc}
+            wait 3000
+        end_if
+    end_if
+
+    // the screen of the daily rewards.
+    if 113, 384 16711422 abs
+        left 442, 267 #sas
+        wait 3000
+    end_if
+
+    // the screen of the daily rewards.
+    if 94, 476 2829191 abs
+        left 442, 267 #sas
+        wait 3000
+    end_if
+
+    // an opened box.
+    if 4, 314 3026575 abs
+        left 257, 437 #sas
+        wait 3000
+
+        // close the premium shop
+        if 4, 314 3026575 abs
+            send217 {Esc}
+        end_if
+    end_if
+
+    // an add opened.
+    if 37, 452 1710618 abs
+        send217 {Esc}
+        wait 3000
+    end_if
+
+    // another add opened.
+    if 42, 340 11376169 abs
+        left 76, 89 #sas
+        wait 3000
+    end_if
+
+    // another add opened.
+    if 60, 60 16316664 abs
+        left 24, 27 #sas
+        wait 3000
+    end_if
+
+    // disconnect.
+    if 134, 261 7829439 abs
+        left 350, 289 #sas
+        wait 3000
+
+        // a premium add.
+        if 134, 261 7829439 abs
+            send217 {Esc}
+            wait 3000
+        end_if
+    end_if
+
+    // game has crashed with an error window.
+    if 539, 407 16777215 abs and 556, 392 11485982 abs
+        terminate SAS
+        wait 3000
+        exec c:\Program Files (x86)\Steam\steamapps\common\SAS Zombie Assault 4\SAS4-Win.exe
+        wait 20000
+        set #sashandle findwindow (SAS)
+        wait 3000
+        set workwindow #sas
+        wait 1000
+        left 311, 347 #sas
+        wait 3000
+        left 484, 243 #sas
+        wait 3000
+    end_if
+
+    // a premium add.
+    if 52, 251 7829439 abs
+        send217 {Esc}
+        wait 3000
+    end_if
+end_while
+end_script
