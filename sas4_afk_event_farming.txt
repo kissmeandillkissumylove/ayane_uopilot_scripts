@@ -106,7 +106,7 @@ while 1 = 1
         wait 3000
         exec c:\Program Files (x86)\Steam\steamapps\common\SAS Zombie Assault 4\SAS4-Win.exe
         wait 20000
-        set #sashandle findwindow (SAS)
+        set #sas findwindow (SAS)
         wait 3000
         set workwindow #sas
         wait 1000
