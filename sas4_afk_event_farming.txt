@@ -90,7 +90,8 @@ while 1 = 1
 
     // disconnect.
     if 134, 261 7829439 abs
-        left 350, 289 #sas
+        left 300, 289 #sas // leave last man standing
+        left 350, 289 #sas // stay last man standing
         wait 3000
 
         // a premium add.
