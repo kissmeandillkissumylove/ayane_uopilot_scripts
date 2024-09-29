@@ -1,18 +1,19 @@
+// sas4_afk_event_farming.
+
+
 // docstring.
-// please, open the game and choose the character before execute this script.
+// open the game and choose the character before execute this script.
 // you can find a wallpaper in the repository that have a line marked that
 // cannot be crossed while this script is running.
 
 
-// find sas4 handle and set working window.
+// find sas4 handle, set working window and set window position.
 set #sas findwindow (SAS)
-wait 1000
+wait 300
 set workwindow #sas
-wait 1000
-
-// set window position and size.
+wait 300
 set windowpos -7 0 1 1 #sas
-wait 1000
+wait 300
 
 // enter the main loop.
 while 1 = 1
