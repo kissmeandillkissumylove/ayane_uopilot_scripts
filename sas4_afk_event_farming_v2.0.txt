@@ -1,0 +1,169 @@
+// sas4_afk_event_farming_v2.0.
+
+
+// docstring.
+// open the game and choose the character before execute this script. you can
+// find a wallpaper in the repository that have a line marked that cannot be
+// crossed while this script is running.
+
+
+gosub setwindowsettings
+
+set $battle no
+
+// enter the main loop.
+while 1 = 1
+    if $battle = no
+        gosub mastery
+        gosub gotoevent
+        gosub checkforad
+        gosub box
+        gosub dailyreward
+    end_if
+
+    if $battle = yes
+        gosub endofbattle
+        gosub disconnect
+        gosub gamecrashed
+        gosub holdtheline
+    end_if
+end_while
+
+
+end_script
+
+
+:dailyreward
+    // get a daily reward.
+    if 95, 478 6316218 abs
+        log dailyreward.
+        wait 1000
+        left 441, 267 #sas // take it.
+    end_if
+return
+
+:mastery
+    // a new level of the mastery.
+    if 59, 262 7829439 abs
+        log mastery.
+        wait 1000
+        send217 {esc} // close the window.
+        wait 1000
+        send217 {esc} // close the window.
+        wait 1000
+    end_if
+return
+
+:box
+    // a strongbox.
+    if 105, 237 54 abs and 111, 311 51 abs
+        log box
+        left 225, 384 #sas // open a box.
+        wait 2600
+        left 249, 440 #sas // sell an item.
+        wait 2000
+    end_if
+return
+
+:checkforad
+    // bloons td.
+    if 26, 61 16777215 abs and 29, 52 16185078 abs
+        log checkforad bloons td.
+        left 24, 24 #sas // close an annoying window.
+        wait 500
+    end_if
+
+    // strongboxes.
+    if 134, 177 7829439 abs and 134, 341 7829439 abs
+        log checkforad strongboxes.
+        send217 {esc} // close an annoying window.
+        wait 500
+    end_if
+return
+
+:setwindowsettings
+    // find window handle, set window position and working window.
+    log
+    log setwindowsettings.
+    set #sas findwindow (SAS) // find window.
+    wait 300
+    set windowpos -7 0 1 1 #sas // set window position on the screen.
+    wait 300
+    set workwindow #sas // set working window for uopilot.
+    wait 300
+return
+
+:gotoevent
+    // at the character main menu.
+    if 70, 194 8345364 abs and 70, 299 8345364 abs
+        log gotoevent.
+        wait 500
+        left 316, 307 #sas // enter multiplayer.
+        wait 1600
+        left 437, 308 #sas // enter an event.
+        wait 2100
+        left 120, 358 #sas // don't buy any buffs.
+        while 1 = 1
+            if 43, 52 0 abs and 115, 187 0 abs
+                wait 5000
+                break
+            end_if
+            // user pressed esc.
+            if 70, 194 8345364 abs and 70, 299 8345364 abs
+                return
+            end_if
+        end_while
+        set $battle yes
+    end_if
+return
+
+:holdtheline
+    // use hold the line heavy skill.
+    if colortored (color (42, 471 abs)) = colortored (color (41, 471 abs))
+        log holdtheline.
+        wait 600
+        send217 {1} // use the skill.
+        wait 500
+    end_if
+return
+
+:disconnect
+    // disconnect or death (at the last man standing event).
+    if 134, 261 7829439 abs
+        log disconnect.
+        left 300, 289 #sas // leave last man standing
+        // left 350, 289 #sas // stay last man standing
+        wait 500
+    end_if
+return
+
+:gamecrashed
+    // game has crashed.
+    if 539, 407 16777215 abs and 556, 392 11485982 abs
+        log gamecrashed.
+        terminate SAS
+        wait 3000
+        exec c:\Program Files (x86)\Steam\steamapps\common\SAS Zombie Assault 4\SAS4-Win.exe
+        wait 20000
+        set #sas findwindow (SAS)
+        wait 3000
+        set workwindow #sas
+        wait 1000
+        left 311, 347 #sas
+        wait 3000
+        left 484, 243 #sas
+        wait 3000
+        set $battle no
+    end_if
+return
+
+:endofbattle
+    // at the end of the battle.
+    if 105, 237 54 abs and 111, 311 51 abs
+        log endofbattle.
+        wait 1000
+        left 302, 385 #sas // press ok button.
+        wait 1000
+        set $battle no
+    end_if
+return
