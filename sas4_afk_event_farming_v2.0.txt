@@ -19,6 +19,7 @@ while 1 = 1
         gosub checkforad
         gosub box
         gosub dailyreward
+        gosub sellitem
     end_if
 
     if $battle = yes
@@ -31,6 +32,15 @@ end_while
 
 
 end_script
+
+
+:sellitem
+    if 54, 392 2500220 abs and 36, 163 3026575 abs
+        log sellitem.
+        left 249, 440 #sas // sell an item.
+        wait 500
+    end_if
+return
 
 
 :dailyreward
@@ -57,11 +67,9 @@ return
 :box
     // a strongbox.
     if 105, 237 54 abs and 111, 311 51 abs
-        log box
+        log box.
         left 225, 384 #sas // open a box.
-        wait 2600
-        left 249, 440 #sas // sell an item.
-        wait 2000
+        wait 500
     end_if
 return
 
@@ -132,7 +140,7 @@ return
     if 134, 261 7829439 abs
         log disconnect.
         left 300, 289 #sas // leave last man standing
-        // left 350, 289 #sas // stay last man standing
+        //left 350, 289 #sas // stay last man standing
         wait 500
     end_if
 return
@@ -161,7 +169,9 @@ return
     // at the end of the battle.
     if 105, 237 54 abs and 111, 311 51 abs
         log endofbattle.
-        wait 1000
+        wait 2000
+        init_arr %a (1) day . month . year _ hour . min . sec
+        printscreen #sas 0 0 0 0 C:\ayane_2024-04-08\0002_tmp\scr\%a [1].png
         left 302, 385 #sas // press ok button.
         wait 1000
         set $battle no
