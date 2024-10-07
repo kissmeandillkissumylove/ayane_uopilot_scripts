@@ -1,0 +1,64 @@
+// sas4_enter_nightmare.
+
+
+// docstring.
+//
+
+
+// find window and set this window working.
+set #sas findwindow (SAS)
+wait 300
+set workwindow #sas
+wait 300
+
+// set window position.
+set windowpos -7 0 1 1 #sas
+wait 300
+
+// enter the main loop.
+while 1 = 1
+
+    // character main menu.
+   if 70, 213 8345364 abs
+        wait 1000
+        left 316, 302 #sas // enter multiplayer.
+        wait 1700
+        left 201, 309 #sas // enter nightmare.
+        wait 1000
+        left 317, 187 #sas // choose quickmatch.
+        wait 2400
+        left 526, 283 #sas // take only high roller.
+        wait 100
+        left 328, 361 #sas // accept the price.
+    end_if
+
+    // at the end of the match.
+    if 235, 68 16711422 abs
+        wait 500
+        left 303, 385 #sas
+    end_if
+
+    // open a box and sell an item.
+    if 201, 411 16777215 abs
+        wait 100
+        left 311, 384 #sas // open a box.
+        wait 2500
+        left 259, 442 #sas // sell an item.
+    end_if
+
+    // news and updates.
+    if 371, 238 7829439 abs
+        send217 {esc} // close the window.
+    end_if
+
+    // fairground pack.
+    if 133, 254 7829439 abs
+        send217 {esc} // close the window.
+    end_if
+
+    // bloons td 6.
+    if 185, 218 11665491 abs
+        left 22, 26 #sas // close the window.
+    end_if
+end_while
+end_script
