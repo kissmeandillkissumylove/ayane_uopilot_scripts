@@ -14,6 +14,7 @@ set $battle no
 // enter the main loop.
 while 1 = 1
     if $battle = no
+        gosub lowconnection
         gosub mastery
         gosub gotoevent
         gosub checkforad
@@ -34,14 +35,23 @@ end_while
 end_script
 
 
+:lowconnection
+    // low internet connection.
+    if 133, 211 7829439 abs and 133, 323 7829439 abs
+        log lowconnection.
+        left 314, 281 #sas // close the window.
+        wait 500
+    end_if
+return
+
 :sellitem
+    // sell an item.
     if 54, 392 2500220 abs and 36, 163 3026575 abs
         log sellitem.
         left 249, 440 #sas // sell an item.
         wait 500
     end_if
 return
-
 
 :dailyreward
     // get a daily reward.
