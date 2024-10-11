@@ -21,6 +21,7 @@ while 1 = 1
         gosub box
         gosub dailyreward
         gosub sellitem
+        gosub missclicked
     end_if
 
     if $battle = yes
@@ -34,6 +35,13 @@ end_while
 
 end_script
 
+
+:missclicked
+    // missclicked while were trying to enter a lobby.
+    if 30, 461 379391 abs and 41, 454 1360895 abs
+        send217 {esc} // exit.
+    end_if
+return
 
 :lowconnection
     // low internet connection.
@@ -94,6 +102,13 @@ return
     // strongboxes.
     if 134, 177 7829439 abs and 134, 341 7829439 abs
         log checkforad strongboxes.
+        send217 {esc} // close an annoying window.
+        wait 500
+    end_if
+
+    // news and updates.
+    if 71, 153 7829439 abs and 71, 379 7829439 abs
+        log checkforad news and updates.
         send217 {esc} // close an annoying window.
         wait 500
     end_if
@@ -180,8 +195,13 @@ return
     if 105, 237 54 abs and 111, 311 51 abs
         log endofbattle.
         wait 2000
-        init_arr %a (1) day . month . year _ hour . min . sec
-        printscreen #sas 0 0 0 0 C:\ayane_2024-04-08\0002_tmp\scr\%a [1].png
+        // warning! make a screenshot. comment it if don't need a screenshot.
+        init_arr %date (1) year _ month _ day _
+        set $time timenow
+        set $time string_replace ($time : _ all)
+        init_arr %time (1) string_replace ($time " " _ all)
+        printscreen #sas 0 0 0 0 C:\ayane_2024-04-08\0002_tmp\scr\%date [1]%time [1].jpg
+        // continue.
         left 302, 385 #sas // press ok button.
         wait 1000
         set $battle no
