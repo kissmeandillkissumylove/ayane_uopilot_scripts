@@ -28,7 +28,7 @@ while 1 = 1
         gosub endofbattle
         gosub disconnect
         gosub gamecrashed
-        gosub holdtheline
+        // gosub holdtheline
     end_if
 end_while
 
@@ -39,7 +39,16 @@ end_script
 :missclicked
     // missclicked while were trying to enter a lobby.
     if 30, 461 379391 abs and 41, 454 1360895 abs
-        send217 {esc} // exit.
+        send217 {esc} // come back.
+        wait 500
+    end_if
+
+    // missclicked while were trying to skip buying the buffs.
+    if 120, 239 13866 abs and 54, 297 13867 abs
+        send217 {esc} // come back.
+        wait 500
+        send217 {esc} // come back to the main menu.
+        wait 500
     end_if
 return
 
@@ -137,6 +146,7 @@ return
         wait 2100
         left 120, 358 #sas // don't buy any buffs.
         while 1 = 1
+            // entered a battle.
             if 43, 52 0 abs and 115, 187 0 abs
                 wait 5000
                 break
