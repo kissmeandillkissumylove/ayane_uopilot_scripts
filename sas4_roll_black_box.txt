@@ -1,0 +1,172 @@
+// sas4_roll_black_box.
+
+// docstring.
+// warning! close the steam before run this script.
+// warning! find the same folders are using here in your system and replace all
+// the paths.
+
+// open temp sas4 folder and set its position.
+exec cmd /c start "" "C:\Program Files (x86)\Steam\userdata\910946442\678800\local\Data\Docs"
+wait 1000
+set #folder findwindow (Docs)
+wait 500
+set windowpos -7 519 300 200 #folder
+wait 500
+
+// open temp profile folder. sorry it's not me an idiot, it's a windows folder
+// system so complecated.
+set #ownerHandle findwindow (Docs)
+set #tmp getwindow (#ownerHandle child)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp child)
+set #tmp getwindow (#tmp child)
+set #tmp getwindow (#tmp child)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp child)
+set #folder getwindow (#tmp child)
+double_left 50, 40 #folder // finnaly open the folder
+wait 1000
+
+// now find a new window, bcs we have opened a new window.
+// i'm doing it bcs of security.
+set #ownerHandle findwindow (630f12f48ceef43e0152f5fd) // warning! replace the first chars here.
+set #tmp getwindow (#ownerHandle child)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp child)
+set #tmp getwindow (#tmp child)
+set #tmp getwindow (#tmp child)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp next)
+set #tmp getwindow (#tmp child)
+set #folder getwindow (#tmp child)
+wait 1000
+
+// select and delete all the files.
+set workwindow #folder
+gosub removefiles
+
+// run the game.
+// warning! replace with your path.
+exec c:\Program Files (x86)\Steam\steamapps\common\SAS Zombie Assault 4\SAS4-Win.exe
+wait 30000
+
+// close the steam and it's fucking ad.
+set #steam findwindow (Steam)
+set #ad findwindow (Special Offers)
+showwindow #steam HIDE
+wait 1000
+showwindow #ad HIDE
+wait 1000
+
+// set the game position.
+set #sas findwindow (SAS)
+wait 300
+set windowpos -7 0 0 0 #sas
+wait 300
+
+// enter the main loop.
+set #a 0 // this variable for "lag interface".
+while 1 = 1
+    // log the game profile.
+    if 30, 480 1382080 abs
+        left 310, 350 #sas
+        wait 500
+        set #a 0
+    end_if
+
+    // take the rewards.
+    if 146, 243 7829439 abs
+        wait 500
+        left 310, 380 #sas
+        wait 500
+        set #a 0
+    end_if
+
+    // you have received an event reward.
+    if 133, 252 7829439 abs
+        wait 300
+        left 317, 278 #sas
+        wait 1000
+        left 391, 236 #sas
+        wait 500
+        set #a 0
+    end_if
+
+    // open a black box.
+    if 252, 244 3487030 abs
+        wait 800
+        left 417, 390 #sas
+        wait 800
+        left 398, 281 #sas
+        gosub takereward
+        wait 2500 // tmp! i will switch it later.
+        init_arr %a (1) day . month . year _ hour . min . sec
+        printscreen #sas 0 0 0 0 C:\ayane_2024-04-08\0002_tmp\scr\%a [1].png
+        wait 2500 // tmp! i will switch it later.
+        terminate SAS
+        wait 1000
+        gosub removefiles
+        wait 1000
+        exec c:\Program Files (x86)\Steam\steamapps\common\SAS Zombie Assault 4\SAS4-Win.exe
+        wait 5000
+        set #sas findwindow (SAS)
+        wait 1000
+        set #a 0
+    end_if
+
+    // the interface lag. we have to reopen a game.
+    if #a > 80
+        terminate SAS
+        wait 1000
+        gosub removefiles
+        wait 1000
+        exec c:\Program Files (x86)\Steam\steamapps\common\SAS Zombie Assault 4\SAS4-Win.exe
+        wait 5000
+        set #sas findwindow (SAS)
+        wait 1000
+        set #a 0
+    end_if
+
+    set #a #a + 1
+end_while
+
+
+end_script
+
+
+:takereward
+    // warning! uncomment reward block of code where you want to chose.
+
+    // tmp! i will change it later.
+    log 321, 192 color(321, 192 abs)
+
+    // hotspot.
+    //if 321, 192 395280 abs
+    //    end_script
+    //end_if
+return
+
+:removefiles
+    // we have to do it three times.
+    set #i 0
+    for #i 0 2 1
+        left 30, 40 #folder // select a file.
+        wait 500
+        showwindow #ownerHandle // sorry i have to switch focus to this window.
+        send {delete} // remove
+        wait 500
+    end_for
+return
